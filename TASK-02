@@ -1,0 +1,73 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+
+public class tictactoe{
+    private JFrame frame;
+    private JPanel titlePanel, buttonPanel;
+    private JLabel textfield;
+    private JButton[] buttons;
+
+    private char playerToken = 'X';
+
+    public tictactoe() {
+
+        frame = new JFrame("Tic Tac Toe");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 600);
+
+        textfield = new JLabel("Player X's turn", SwingConstants.CENTER);
+
+        titlePanel = new JPanel();
+        titlePanel.add(textfield);
+
+        buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(3, 3));
+
+        buttons = new JButton[9];
+        for(int i=0; i<9; i++) {
+            buttons[i] = new JButton();
+            buttonPanel.add(buttons[i]);
+            buttons[i].setFont(new Font("Arial", Font.BOLD, 120));
+            buttons[i].setFocusable(false);
+            buttons[i].addActionListener(new ButtonClickListener());
+        }
+
+        frame.add(titlePanel, BorderLayout.NORTH);
+        frame.add(buttonPanel);
+
+        frame.setVisible(true);
+    }
+
+    private class ButtonClickListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+
+            for(int i=0; i<9;i++) {
+                if(e.getSource() == buttons[i]) {
+                    if(buttons[i].getText().equals("")) {
+                        buttons[i].setText(String.valueOf(playerToken));
+                        if(playerToken == 'X')
+                            playerToken = 'O';
+                        else
+                            playerToken = 'X';
+                        textfield.setText("Player " + playerToken + "'s turn");
+
+                        check();
+                    }
+                }
+            }
+        }
+    }
+
+    public void check() {
+
+    }
+
+    public static void main(String[] args) {
+        new tictactoe();
+    }
+
+}
